@@ -1,14 +1,10 @@
 import { useState } from 'react'
+
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
-const Button = ({ onSmash, text }) => <button onClick={onSmash}>{text}</button>
-
-
-
 
 const App = () => {
   const anecdotes = [
@@ -23,11 +19,21 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
 
+  const updateVotes = () => {
+    setVotes(newVotes => ({
+      ...newVotes,[selected]: newVotes[selected]+1
+    }))
+  }
+
+ 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
-      <Button onSmash={() => setSelected(getRandomIntInclusive(0,anecdotes.length-1))} text="next anecdote"/>
+      <p>has {votes[selected]} votes</p>
+      <button onClick={updateVotes}>vote</button>
+      <button onClick={() => {setSelected(getRandomIntInclusive(0,anecdotes.length-1))}}>next anecdote</button>
     </div>
 
   )
