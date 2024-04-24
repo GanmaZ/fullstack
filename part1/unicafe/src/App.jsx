@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-const Display = ({counter, text}) => <div>{text} {counter}</div>
 const Button = ({ onSmash, text }) => <button onClick={onSmash}>{text}</button>
+const Display = ({counter, text}) => <div>{text} {counter}</div>
 const Statistics = (props) => {
   switch (props.option) {
     case "all":
@@ -17,7 +17,27 @@ const Statistics = (props) => {
       break;
   }
 }
-
+const Collected = (props) => {
+  if(props.good === 0 && props.neutral === 0 && props.bad === 0){
+    return (
+      <div>
+        No feedback given
+      </div>
+    )
+  }
+  else{
+    return (
+      <div>
+      <Display counter={props.good} text="good"/>
+      <Display counter={props.neutral} text="neutral"/>
+      <Display counter={props.bad} text="bad"/>
+      <Statistics option={"all"} good={props.good} neutral={props.neutral} bad={props.bad}/>
+      <Statistics option={"average"} good={props.good} neutral={props.neutral} bad={props.bad}/>
+      <Statistics option={"positive"} good={props.good} neutral={props.neutral} bad={props.bad}/>
+      </div>
+    )
+  }
+}
 
 const App = () => {
   // guarda los clics de cada botón en su propio estado
@@ -32,12 +52,7 @@ const App = () => {
       <Button onSmash={() => setNeutral(neutral + 1)} text="neutral" />
       <Button onSmash={() => setBad(bad + 1)} text="bad" />
       <h1>statistics</h1>
-      <Display counter={good} text="good"/>
-      <Display counter={neutral} text="neutral"/>
-      <Display counter={bad} text="bad"/>
-      <Statistics option={"all"} good={good} neutral={neutral} bad={bad}/>
-      <Statistics option={"average"} good={good} neutral={neutral} bad={bad}/>
-      <Statistics option={"positive"} good={good} neutral={neutral} bad={bad}/>
+      <Collected good={good} neutral={neutral} bad={bad}/>
     </div>
   )
 }
