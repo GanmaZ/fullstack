@@ -2,16 +2,12 @@ import { useState } from 'react'
 
 const Button = ({ onSmash, text }) => <button onClick={onSmash}>{text}</button>
 const StatisticsLine = (props) => {
-  if(props.text === "good" || props.text === "neutral" || props.text === "bad"){
-    return(<div>{props.text} {props.value}</div>)
-  }
-  else if(props.text === "positive"){
+  if(props.text === "positive"){
     return(<div>{props.text} {props.value} %</div>)
   }
   else{
     return(<div>{props.text} {props.value}</div>)
   }
-
 }
 const Collected = (props) => {
   if(props.good === 0 && props.neutral === 0 && props.bad === 0){
