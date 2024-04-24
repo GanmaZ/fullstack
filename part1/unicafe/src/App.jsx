@@ -3,10 +3,10 @@ import { useState } from 'react'
 const Button = ({ onSmash, text }) => <button onClick={onSmash}>{text}</button>
 const StatisticsLine = (props) => {
   if(props.text === "positive"){
-    return(<div>{props.text} {props.value} %</div>)
+    return(<tr><td>{props.text}</td><td>{props.value} %</td></tr>)
   }
   else{
-    return(<div>{props.text} {props.value}</div>)
+    return(<tr><td>{props.text}</td><td>{props.value}</td></tr>)
   }
 }
 const Collected = (props) => {
@@ -19,14 +19,16 @@ const Collected = (props) => {
   }
   else{
     return (
-      <div>
-      <StatisticsLine text="good" value={props.good} />
-      <StatisticsLine text="neutral" value={props.neutral} />
-      <StatisticsLine text="bad" value={props.bad} />
-      <StatisticsLine text="all" value={props.good+props.neutral+props.bad}/>
-      <StatisticsLine text="average" value={((props.good*1)+(props.neutral*0)+(props.bad*-1))/(props.good+props.neutral+props.bad)}/>
-      <StatisticsLine text="positive" value={(100 * props.good) / (props.good+props.neutral+props.bad) }/>
-      </div>
+      <table>
+        <tbody>
+          <StatisticsLine text="good" value={props.good} />
+          <StatisticsLine text="neutral" value={props.neutral} />
+          <StatisticsLine text="bad" value={props.bad} />
+          <StatisticsLine text="all" value={props.good+props.neutral+props.bad}/>
+          <StatisticsLine text="average" value={((props.good*1)+(props.neutral*0)+(props.bad*-1))/(props.good+props.neutral+props.bad)}/>
+          <StatisticsLine text="positive" value={(100 * props.good) / (props.good+props.neutral+props.bad) }/>
+        </tbody>
+      </table>
     )
   }
 }
