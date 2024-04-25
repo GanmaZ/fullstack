@@ -20,20 +20,28 @@ const App = () => {
 
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
-
+  
+  //Best Forma para updatear un state
   const updateVotes = () => {
-    setVotes(newVotes => ({
-      ...newVotes,[selected]: newVotes[selected]+1
-    }))
+    setVotes(newVotes =>
+      newVotes.map((vote, index) =>
+        index === selected ? vote + 1 : vote
+      )
+    )
   }
 
- 
+  const mostVotedIndex = votes.indexOf(Math.max(...votes));
+
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
       <button onClick={updateVotes}>vote</button>
       <button onClick={() => {setSelected(getRandomIntInclusive(0,anecdotes.length-1))}}>next anecdote</button>
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[mostVotedIndex]}</p>
+      <p>has {votes[mostVotedIndex]} votes</p>
     </div>
 
   )
