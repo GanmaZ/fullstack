@@ -1,10 +1,5 @@
 import Course from './components/Course'
 
-const Total = (props) => {
-  return <p>Number of exercises {props.sumOfExercises}</p>
-}
-
-
 const App = () => {
   const course = {
     id: 1,
@@ -24,6 +19,11 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
