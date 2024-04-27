@@ -1,6 +1,6 @@
 const Phone = ({ phone }) => {
     return (
-      <p>{phone.name}</p>
+      <p>{phone.name} {phone.number}</p>
     )
   }
   
