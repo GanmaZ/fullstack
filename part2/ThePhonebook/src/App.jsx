@@ -23,6 +23,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [showFilter, setShowFilter] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -36,19 +37,23 @@ const App = () => {
           .update(persons.filter(person => person.name === newName).map(person => person.id), personObject)
           .then(returnedPerson => { 
           setPersons(persons.concat(returnedPerson))
-          setErrorMessage( `${returnedPerson.name} updated number to ${returnedPerson.number}`) 
-          setTimeout(() => setErrorMessage(null), 5000)
+          setSuccessMessage( `${returnedPerson.name} updated number to ${returnedPerson.number}`) 
+          setTimeout(() => setSuccessMessage(null), 5000)
           setNewName('')
           setNewNumber('')
         })
+          .catch(error =>{
+            setErrorMessage( `Information of ${newName} was already deleted from server`)
+            setTimeout(() => setErrorMessage(null), 5000)
+          })
       }
     }else{
       personsService
         .create(personObject)
         .then(returnedPerson => { 
         setPersons(persons.concat(returnedPerson))
-        setErrorMessage( `Added ${returnedPerson.name}`) 
-        setTimeout(() => setErrorMessage(null), 5000)
+        setSuccessMessage( `Added ${returnedPerson.name}`) 
+        setTimeout(() => setSuccessMessage(null), 5000)
         setNewName('')
         setNewNumber('')
       })
@@ -78,7 +83,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <BetterError message={errorMessage}/>
+      <BetterError error={errorMessage} success={successMessage}/>
       <Filter filterChangeHandler={handleFilterChange}/>
       <h2>add a new</h2>
       <Personform addPerson={addPerson} nameChangeHandler={handleNameChange} numberChangeHandler={handleNumberChange} newName={newName}  newNumber={newNumber}/>
