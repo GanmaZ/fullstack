@@ -5,6 +5,7 @@ import Persons from './components/Persons'
 import personsService from './services/Contact'
 
 
+
 const App = () => {
 
   useEffect(() => {
@@ -50,6 +51,11 @@ const App = () => {
   const handleFilterChange = (event) => {
     setShowFilter(persons.filter(x => x.name.toLowerCase().includes(event.target.value.toLowerCase())))
   }
+  const deletePerson = (person) => {
+    if(window.confirm(`Delete ${person.name}`)){
+      personsService.erased(person.id)
+    }
+  }
 
   return (
     <div>
@@ -58,7 +64,7 @@ const App = () => {
       <h2>add a new</h2>
       <Personform addPerson={addPerson} nameChangeHandler={handleNameChange} numberChangeHandler={handleNumberChange} newName={newName}  newNumber={newNumber}/>
       <h2>Numbers</h2>
-      <Persons showFilter={showFilter} persons={persons}/>
+      <Persons showFilter={showFilter} persons={persons} deletePerson={deletePerson}/>
     </div>
   )
 }

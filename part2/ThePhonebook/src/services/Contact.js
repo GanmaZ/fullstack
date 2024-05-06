@@ -16,4 +16,8 @@ const update = (id, newObject) => {
   return request.then(response => response.data)
 }
 
-export default {getAll, create, update}
+const erased = (id) => {
+    const request = axios.delete(`${baseUrl}/${id}`)
+}
+
+export default {getAll, create, update, erased}
