@@ -28,19 +28,31 @@ const App = () => {
     name: newName,
     number: newNumber,
     }
-
-    personsService
-      .create(personObject)
-      .then(returnedPerson => { 
-      setPersons(persons.concat(returnedPerson))
-      setNewName('')
-      setNewNumber('')
-    })
+    if(persons.map(person => person.name).includes(newName)){  
+      if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
+        personsService
+          .update(persons.filter(person => person.name === newName).map(person => person.id), personObject)
+          .then(returnedPerson => { 
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+      }
+    }else{
+      personsService
+        .create(personObject)
+        .then(returnedPerson => { 
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')
+      })
+    }
     
   }
   const handleNameChange = (event) => {
-    if(persons.map(x => x.name).includes(event.target.value)){ 
-      alert(`${event.target.value} is already added to phonebook`)
+    if(persons.map(person => person.name).includes(event.target.value)){ 
+      window.confirm(`${event.target.value} is already added to phonebook`)
+      setNewName(event.target.value) 
     }else{
       setNewName(event.target.value)
     }
@@ -54,7 +66,7 @@ const App = () => {
   const deletePerson = (person) => {
     if(window.confirm(`Delete ${person.name}`)){
       personsService.erased(person.id)
-    }
+    } 
   }
 
   return (

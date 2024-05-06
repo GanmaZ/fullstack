@@ -17,7 +17,7 @@ const update = (id, newObject) => {
 }
 
 const erased = (id) => {
-    const request = axios.delete(`${baseUrl}/${id}`)
+   axios.delete(`${baseUrl}/${id}`)
 }
 
 export default {getAll, create, update, erased}
