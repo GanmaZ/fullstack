@@ -25,11 +25,18 @@ const App = () => {
     event.preventDefault();
     const personObject = {
     name: newName,
-    number: newNumber
+    number: newNumber,
     }
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewNumber('')
+
+    axios
+    .post('http://localhost:3001/persons', personObject)
+    .then(response => {
+      console.log(response)
+      setPersons(persons.concat(response.data))
+      setNewName('')
+      setNewNumber('')
+    })
+    
   }
   const handleNameChange = (event) => {
     if(persons.map(x => x.name).includes(event.target.value)){ 
