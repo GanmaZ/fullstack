@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import BetterError from './components/BetterError'
 import Filter from './components/Filter'
 import Personform from './components/PersonForm'
 import Persons from './components/Persons'
@@ -21,6 +22,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [showFilter, setShowFilter] = useState([])
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -34,6 +36,8 @@ const App = () => {
           .update(persons.filter(person => person.name === newName).map(person => person.id), personObject)
           .then(returnedPerson => { 
           setPersons(persons.concat(returnedPerson))
+          setErrorMessage( `${returnedPerson.name} updated number to ${returnedPerson.number}`) 
+          setTimeout(() => setErrorMessage(null), 5000)
           setNewName('')
           setNewNumber('')
         })
@@ -43,6 +47,8 @@ const App = () => {
         .create(personObject)
         .then(returnedPerson => { 
         setPersons(persons.concat(returnedPerson))
+        setErrorMessage( `Added ${returnedPerson.name}`) 
+        setTimeout(() => setErrorMessage(null), 5000)
         setNewName('')
         setNewNumber('')
       })
@@ -72,6 +78,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <BetterError message={errorMessage}/>
       <Filter filterChangeHandler={handleFilterChange}/>
       <h2>add a new</h2>
       <Personform addPerson={addPerson} nameChangeHandler={handleNameChange} numberChangeHandler={handleNumberChange} newName={newName}  newNumber={newNumber}/>

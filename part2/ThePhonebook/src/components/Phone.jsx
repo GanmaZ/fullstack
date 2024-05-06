@@ -1,7 +1,7 @@
 const Phone = ({ phone, deletePerson }) => {
     return (
       <>
-      <p>{phone.name} {phone.number} <button onClick={() => deletePerson(phone)}>delete</button></p>
+      <p className="person" >{phone.name} {phone.number} <button onClick={() => deletePerson(phone)}>delete</button></p>
       </>
     )
   }
