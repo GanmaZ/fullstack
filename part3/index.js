@@ -30,6 +30,11 @@ let phonebook = [
     response.json(phonebook)
   })
 
+  app.get('/info', (request, response) => {
+    response.send(`<p>Phonebook has info for ${phonebook.length} people</p><p>${new Date()}</p>`)
+  })
+
+
   app.get('/api/notes/:id', (request, response) => {
     const id = Number(request.params.id)
     const note = notes.find(note => note.id === id)
