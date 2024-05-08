@@ -34,13 +34,12 @@ let phonebook = [
     response.send(`<p>Phonebook has info for ${phonebook.length} people</p><p>${new Date()}</p>`)
   })
 
-
-  app.get('/api/notes/:id', (request, response) => {
+  app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
-    const note = notes.find(note => note.id === id)
+    const phone = phonebook.find(phone => phone.id === id)
    
-    if (note) {
-        response.json(note)
+    if (phone) {
+        response.json(phone)
       } else {
         response.status(404).end()
       }
