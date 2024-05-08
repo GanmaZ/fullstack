@@ -63,16 +63,22 @@ let phonebook = [
     const body = request.body
   
     if (!body.name) {
-      return response.status(400).json({ 
-        error: 'name missing' 
-      })
+        return response.status(400).json({ 
+            error: 'name missing' 
+        })
     }
     else if (!body.number){
         return response.status(400).json({ 
             error: 'number missing' 
         })
     }
+    else if (phonebook.map(phone => phone.name).includes(body.name)){
+        return response.status(400).json({ 
+            error: 'name must be unique' 
+        })
+    }
   
+
     const phone = {
       id: generateId(),
       name: body.name,
