@@ -3,7 +3,7 @@ import Find from './components/Find'
 import Countries from './services/Countries'
 import Weather from './services/Weather'
 import CountriesBody from './components/CountriesBody'
-import CountryBody from './components/CountryBody'
+
 
 
 function App() {
@@ -22,7 +22,18 @@ function App() {
 
   
   const handleFinderChange = (event) => {
-    setCountriesFind(countries.map(country => country).filter(country => country.name.common.toLowerCase().includes(event.target.value.toLowerCase())))
+    let countriesFind = countries.map(country => country).filter(country => country.name.common.toLowerCase().includes(event.target.value.toLowerCase()))
+    
+    setCountriesFind(countriesFind)
+
+    if(countriesFind.length === 1){
+      Countries
+      .getCountry(countriesFind.find(countrie => countrie).name.common)
+      .then(initialCountry => setNewShow(initialCountry))
+      Weather
+      .getWeather(countriesFind.find(countrie => countrie).capital)
+      .then(initialWeather => setNewWeather(initialWeather))
+    }
     if(newShow.length !== 0){
       setNewShow([])
     }
@@ -40,8 +51,7 @@ function App() {
   return (
     <>
       <p>find countries <Find finderChangeHandler={handleFinderChange}/></p>
-      <CountriesBody  countriesFind={countriesFind} onClickShow={onClickShow} newShow={newShow}/>
-      <CountryBody  newShow={newShow} newWeather={newWeather}/>
+      <CountriesBody  countriesFind={countriesFind} onClickShow={onClickShow} newShow={newShow} newWeather={newWeather}/>
     </>
   )
 }
