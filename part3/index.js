@@ -53,30 +53,35 @@ let phonebook = [
   })
 
   const generateId = () => {
-    const maxId = notes.length > 0
-      ? Math.max(...notes.map(n => n.id))
+    const maxId = phonebook.length > 0
+      ? Math.max(...phonebook.map(n => n.id))
       : 0
     return maxId + 1
   }
   
-  app.post('/api/notes', (request, response) => {
+  app.post('/api/persons', (request, response) => {
     const body = request.body
   
-    if (!body.content) {
+    if (!body.name) {
       return response.status(400).json({ 
-        error: 'content missing' 
+        error: 'name missing' 
       })
     }
-  
-    const note = {
-      content: body.content,
-      important: Boolean(body.important) || false,
-      id: generateId(),
+    else if (!body.number){
+        return response.status(400).json({ 
+            error: 'number missing' 
+        })
     }
   
-    notes = notes.concat(note)
+    const phone = {
+      id: generateId(),
+      name: body.name,
+      number: body.number
+    }
   
-    response.json(note)
+    phonebook = phonebook.concat(phone)
+  
+    response.json(phone)
   })
   
   const PORT = 3001
