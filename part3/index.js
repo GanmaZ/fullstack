@@ -35,7 +35,6 @@ morgan.token('data', function (req, res) { return JSON.stringify(req.body) })
 
   app.get('/api/persons', (request, response) => {
     response.json(phonebook)
-
   })
 
   app.get('/info', (request, response) => {
@@ -92,9 +91,6 @@ morgan.token('data', function (req, res) { return JSON.stringify(req.body) })
       number: body.number
     }
     
-    
-    
-
     phonebook = phonebook.concat(phone)
     response.json(phone)
   })

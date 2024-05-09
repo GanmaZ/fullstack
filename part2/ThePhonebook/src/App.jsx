@@ -12,11 +12,8 @@ const App = () => {
   useEffect(() => {
     personsService
       .getAll()
-      .then(initialPersons => {
-        setPersons(initialPersons)
-      })
-  })
-
+      .then(initialPersons => setPersons(initialPersons))
+  }, [])
 
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
@@ -24,6 +21,9 @@ const App = () => {
   const [showFilter, setShowFilter] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
+
+  
+
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -77,7 +77,8 @@ const App = () => {
   const deletePerson = (person) => {
     if(window.confirm(`Delete ${person.name}`)){
       personsService.erased(person.id)
-    } 
+      setPersons(persons.filter(x => x.id !== person.id))
+    }
   }
 
   return (
