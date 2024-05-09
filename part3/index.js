@@ -3,7 +3,8 @@ const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
-app.use(morgan('tiny'))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))
+
 
 let phonebook = [
         { 
@@ -27,7 +28,9 @@ let phonebook = [
         "number": "39-23-6423122"
         }
     ]
-  
+
+morgan.token('data', function (req, res) { return JSON.stringify(req.body) })
+
   app.get('/api/persons', (request, response) => {
     response.json(phonebook)
 
@@ -80,16 +83,17 @@ let phonebook = [
             error: 'name must be unique' 
         })
     }
-  
 
     const phone = {
       id: generateId(),
       name: body.name,
       number: body.number
     }
-  
+    
+    
+    
+
     phonebook = phonebook.concat(phone)
-  
     response.json(phone)
   })
   
