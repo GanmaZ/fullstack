@@ -78,6 +78,9 @@ const App = () => {
     if(window.confirm(`Delete ${person.name}`)){
       personsService.erased(person.id)
       setPersons(persons.filter(x => x.id !== person.id))
+      if(showFilter.length !==0){
+        setShowFilter(showFilter.filter(x => x.id !== person.id))
+      }
     }
   }
 
